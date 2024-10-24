@@ -26,22 +26,20 @@
                 android:id="@+id/activity_main_image_of_the_day"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@{viewModel.apod.title}"
                 android:adjustViewBounds="true"
+                android:contentDescription="@{viewModel.apod.title == null ? @string/this_is_nasa_s_picture_of_day_showing_nothing_yet : String.format(@string/nasa_picture_of_day_content_description_format, viewModel.apod.title)}"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/placeholder_picture_of_day"/>
+                app:srcCompat="@drawable/placeholder_picture_of_day" />
 
             <TextView
                 android:id="@+id/textView"
+                style="@style/Apod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:textSize="20sp"
+                android:text="@{viewModel.apod.title == null ? @string/this_is_nasa_s_picture_of_day_showing_nothing_yet : String.format(@string/nasa_picture_of_day_content_description_format, viewModel.apod.title)}"
                 android:layout_gravity="bottom"
-                android:background="#55010613"
-                android:text="@{viewModel.apod.title}" />
+                android:background="@color/transparent_background" />
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
