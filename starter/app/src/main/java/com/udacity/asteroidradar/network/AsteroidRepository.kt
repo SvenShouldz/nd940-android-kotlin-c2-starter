@@ -65,6 +65,12 @@ class AsteroidRepository(private val asteroidDao: AsteroidDao) {
         return asteroidDao.getAsteroids()
     }
 
+    // Delete asteroids where the close approach date is before today
+    suspend fun deleteOldAsteroids() {
+        val today = getTodayDate()
+        asteroidDao.deleteOldAsteroids(today)
+    }
+
     // Helper functions to get start and end dates
     fun getTodayDate(): String {
         val dateFormat = SimpleDateFormat(API_QUERY_DATE_FORMAT, Locale.getDefault())
