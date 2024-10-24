@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.udacity.asteroidradar.Constants.API_QUERY_DATE_FORMAT
 import com.udacity.asteroidradar.Constants.DEFAULT_END_DATE_DAYS
+import com.udacity.asteroidradar.network.api.ApodResponse
 import com.udacity.asteroidradar.room.Asteroid
 import com.udacity.asteroidradar.room.AsteroidDao
 import java.text.SimpleDateFormat
@@ -11,6 +12,16 @@ import java.util.Calendar
 import java.util.Locale
 
 class AsteroidRepository(private val asteroidDao: AsteroidDao) {
+
+    suspend fun fetchImageOfTheDay(apiKey: String): ApodResponse? {
+        return try {
+            val response = NetworkService.apodApiService.getImageOfTheDay(apiKey)
+            response
+        } catch (e: Exception) {
+            Log.e("ERROR", "Failed to fetch APOD: ${e.message}")
+            null
+        }
+    }
 
     suspend fun refreshAsteroids(apiKey: String) {
         try {
@@ -46,7 +57,7 @@ class AsteroidRepository(private val asteroidDao: AsteroidDao) {
             asteroidDao.insertAll(asteroids)
 
         } catch (e: Exception) {
-            Log.e("ERROR", e.message.toString())
+            Log.e("ERROR", "Failed to fetch Asteroids: ${e.message}")
         }
     }
 

@@ -38,7 +38,7 @@ data class DiameterData(
 data class CloseApproachData(
     @Json(name = "relative_velocity") val relativeVelocity: VelocityData,
     @Json(name = "miss_distance") val missDistance: DistanceData,
-    @Json(name = "close_approach_date") val closeApproachDate: String
+    @Json(name = "close_approach_date_full") val closeApproachDate: String
 )
 
 data class VelocityData(

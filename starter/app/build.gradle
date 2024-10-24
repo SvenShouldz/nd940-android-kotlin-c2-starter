@@ -6,6 +6,16 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { stream ->
+        localProperties.load(stream)
+    }
+}
+
+def NASA_API_KEY = localProperties['NASA_API_KEY'] ?: ""
+
 android {
     namespace 'com.udacity.asteroidradar'
     compileSdk 34
@@ -17,11 +27,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField(
-                "String",
-                "NASA_API_KEY",
-                "\"${project.findProperty("NASA_API_KEY")}\""
-        )
+        buildConfigField("String", "NASA_API_KEY", "\"${NASA_API_KEY}\"")
     }
     buildTypes {
         release {

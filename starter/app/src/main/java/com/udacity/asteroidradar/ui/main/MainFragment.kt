@@ -1,6 +1,7 @@
 package com.udacity.asteroidradar.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
@@ -21,7 +23,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout using Data Binding
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
@@ -45,6 +47,16 @@ class MainFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
+        viewModel.apod.observe(viewLifecycleOwner) { apodResponse ->
+            apodResponse?.let {
+
+                Log.d("TAG", it.url)
+                // Load the image using Glide
+                Glide.with(requireContext())
+                    .load(it.url)
+                    .into(binding.activityMainImageOfTheDay)
+            }
+        }
 
         setHasOptionsMenu(true)
         return binding.root
