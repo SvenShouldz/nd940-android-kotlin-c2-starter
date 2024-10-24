@@ -13,16 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
-import com.udacity.asteroidradar.network.AsteroidCacheWorker
-import java.util.concurrent.TimeUnit
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 
 class MainFragment : Fragment() {
 
@@ -58,12 +54,24 @@ class MainFragment : Fragment() {
 
     private fun observePictureOfDay() {
         viewModel.apod.observe(viewLifecycleOwner) { apodResponse ->
-            val apodBinding = binding.activityMainImageOfTheDay
             apodResponse?.let {
+                val cacheSize = (5 * 1024 * 1024).toLong() // 5 MB
+                val cache = Cache(requireContext().cacheDir, cacheSize)
+
+                val okHttpClient = OkHttpClient.Builder()
+                    .cache(cache)
+                    .build()
+
+                // Custom Picasso instance
+                val picasso = Picasso.Builder(requireContext())
+                    .downloader(OkHttp3Downloader(okHttpClient))
+                    .build()
+
+                // Set custom instance as singleton
+                Picasso.setSingletonInstance(picasso)
+
                 // Load the image using Picasso
-                Picasso.get()
-                    .load(it.url)
-                    .into(binding.activityMainImageOfTheDay)
+                picasso.load(it.url).into(binding.activityMainImageOfTheDay)
             }
         }
     }
