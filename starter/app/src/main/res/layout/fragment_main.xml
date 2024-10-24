@@ -26,6 +26,7 @@
                 android:id="@+id/activity_main_image_of_the_day"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@{viewModel.apod.title}"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/placeholder_picture_of_day"/>
@@ -40,7 +41,7 @@
                 android:textSize="20sp"
                 android:layout_gravity="bottom"
                 android:background="#55010613"
-                android:text="@string/image_of_the_day" />
+                android:text="@{viewModel.apod.title}" />
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView

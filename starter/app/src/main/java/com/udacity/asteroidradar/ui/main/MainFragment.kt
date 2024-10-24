@@ -1,17 +1,28 @@
 package com.udacity.asteroidradar.ui.main
 
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
+import com.udacity.asteroidradar.network.AsteroidCacheWorker
+import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment() {
 
@@ -24,42 +35,58 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout using Data Binding
+        // Inflating layout using Data Binding
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
-        // Set the lifecycle owner for data binding
+        // Setting lifecycle owner for data binding
         binding.lifecycleOwner = this
 
-        // Bind the viewModel to the layout
+        // Binding viewModel to layout
         binding.viewModel = viewModel
 
-        // Initialize the RecyclerView Adapter
-        adapter = AsteroidAdapter { asteroid ->
-            // Navigate to a detail fragment on click
-            findNavController(binding.root).navigate(MainFragmentDirections.actionShowDetail(asteroid))
-        }
-        binding.asteroidRecycler.adapter = adapter
-        binding.asteroidRecycler.layoutManager = LinearLayoutManager(requireContext())
+        // Initialize the RecyclerView
+        setupAsteroidRecycler()
 
-        // Observe the asteroidList LiveData and submit the list to the adapter
+        // Observe the asteroidList LiveData and Picture of Day
+        observeAsteroidList()
+        observePictureOfDay()
+
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+
+    private fun observePictureOfDay() {
+        viewModel.apod.observe(viewLifecycleOwner) { apodResponse ->
+            val apodBinding = binding.activityMainImageOfTheDay
+            apodResponse?.let {
+                // Load the image using Picasso
+                Picasso.get()
+                    .load(it.url)
+                    .into(binding.activityMainImageOfTheDay)
+            }
+        }
+    }
+
+    private fun observeAsteroidList() {
         viewModel.asteroidList.observe(viewLifecycleOwner, Observer { asteroidList ->
             asteroidList?.let {
                 adapter.submitList(it)
             }
         })
-        viewModel.apod.observe(viewLifecycleOwner) { apodResponse ->
-            apodResponse?.let {
+    }
 
-                Log.d("TAG", it.url)
-                // Load the image using Glide
-                Glide.with(requireContext())
-                    .load(it.url)
-                    .into(binding.activityMainImageOfTheDay)
-            }
+    private fun setupAsteroidRecycler() {
+        adapter = AsteroidAdapter { asteroid ->
+            // Navigate to a detail fragment on click
+            findNavController(binding.root).navigate(
+                MainFragmentDirections.actionShowDetail(
+                    asteroid
+                )
+            )
         }
-
-        setHasOptionsMenu(true)
-        return binding.root
+        binding.asteroidRecycler.adapter = adapter
+        binding.asteroidRecycler.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
