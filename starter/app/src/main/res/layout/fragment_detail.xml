@@ -48,6 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/close_approach_data_title"
+                        android:labelFor="@+id/close_approach_date"
                         android:textColor="@color/default_text_color" />
 
                     <TextView
@@ -77,6 +78,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/absolute_magnitude_title"
+                            android:labelFor="@+id/absolute_magnitude"
                             android:textColor="@color/default_text_color" />
 
                         <TextView
@@ -94,6 +96,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="16dp"
+                        android:contentDescription="@string/astronomical_unit_explanation_button"
                         app:srcCompat="@drawable/ic_help_circle" />
 
                 </LinearLayout>
@@ -103,6 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/estimated_diameter_title"
+                    android:labelFor="@+id/estimated_diameter"
                     android:textColor="@color/default_text_color" />
 
                 <TextView
@@ -119,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/relative_velocity_title"
+                    android:labelFor="@+id/relative_velocity"
                     android:textColor="@color/default_text_color" />
 
                 <TextView
@@ -135,6 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/distance_from_earth_title"
+                    android:labelFor="@+id/distance_from_earth"
                     android:textColor="@color/default_text_color" />
 
                 <TextView
