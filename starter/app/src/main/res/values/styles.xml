@@ -12,7 +12,7 @@
     <style name="Headline">
         <item name="android:textColor">#FFF</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Apod">
@@ -23,8 +23,8 @@
 
     <style name="Date">
         <item name="android:textColor">#FFF</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
 </resources>

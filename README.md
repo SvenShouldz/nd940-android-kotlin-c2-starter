@@ -15,13 +15,6 @@ This kind of app is one of the most usual in the real world, what you will learn
 1. Android Studio (Jellyfish or above)
 2. JDK 21 with `JAVA_HOME` environment variable set. If you don't have JDK 21 installed or `JAVA_HOME` is not set, consider using a tool like `sdkman` to simplify the process. Refer to the sdkman documentation for installation instructions: [sdkman installation](https://sdkman.io/install)
 
-### Screenshots
-
-![Screenshot 1](starter/screenshots/screen_1.png)
-![Screenshot 2](starter/screenshots/screen_2.png)
-![Screenshot 3](starter/screenshots/screen_3.png)
-![Screenshot 4](starter/screenshots/screen_4.png)
-
 ### Installation
 
 To get the project running on your local machine, you need to follow these steps:
@@ -30,7 +23,7 @@ To get the project running on your local machine, you need to follow these steps
 
 Use this to clone it to your local machine:
 ```bash
-git clone https://github.com/udacity/REPOSITORY_NAME.git
+git clone https://github.com/SvenShouldz/nd940-android-kotlin-c2-starter.git
 ```
 
 **Step 2: Check out the ‘master’ branch**
@@ -41,21 +34,26 @@ This branch is going to let you start working with it. The command to check out 
 git checkout master
 ```
 
-**Step 3: Run the project and check that it compiles correctly**
+**Step 3: Add your NASA API Key to local.properties**
+
+Create a file name local.properties if it doesnt already exist. Then add your NASA API Key
+
+```bash
+NASA_API_KEY=<PUT YOUR KEY HERE>
+```
+
+**Step 4: Run the project and check that it compiles correctly**
 
 Open the project in Android Studio and click the Run ‘app’ button, check that it runs correctly and you can see the app in your device or emulator.
 
-## Testing
 
-Explain the steps needed to run any automated tests
+### Screenshots
 
-### Break Down Tests
+![Screenshot 1](starter/screenshots/screen_1.png)
+![Screenshot 2](starter/screenshots/screen_2.png)
+![Screenshot 3](starter/screenshots/screen_3.png)
+![Screenshot 4](starter/screenshots/screen_4.png)
 
-Explain what each test does and why
-
-```
-Examples here
-```
 ## Project Instructions
 
 You will be provided with a starter code, which includes the necessary dependencies and plugins that you have been using along the courses and that you are going to need to complete this project. 
@@ -63,7 +61,7 @@ You will be provided with a starter code, which includes the necessary dependenc
 The most important dependencies we are using are:
 - Retrofit to download the data from the Internet.
 - Moshi to convert the JSON data we are downloading to usable data in form of custom classes.
-- Glide to download and cache images.
+- Picasso to download and cache images.
 - RecyclerView to display the asteroids in a list.
 
 We recommend you following the guidelines seen in the courses, as well as using the components from the Jetpack library:
