@@ -49,10 +49,8 @@ Open the project in Android Studio and click the Run ‘app’ button, check tha
 
 ### Screenshots
 
-![Screenshot 1](starter/screenshots/screen_1.png)
-![Screenshot 2](starter/screenshots/screen_2.png)
-![Screenshot 3](starter/screenshots/screen_3.png)
-![Screenshot 4](starter/screenshots/screen_4.png)
+![Screenshots](starter/screenshots/screenshots.jpg)
+
 
 ## Project Instructions
 
