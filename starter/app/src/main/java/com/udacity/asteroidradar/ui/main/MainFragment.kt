@@ -47,7 +47,7 @@ class MainFragment : Fragment() {
         observeAsteroidList()
         observePictureOfDay()
 
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
         return binding.root
     }
 
@@ -66,9 +66,6 @@ class MainFragment : Fragment() {
                 val picasso = Picasso.Builder(requireContext())
                     .downloader(OkHttp3Downloader(okHttpClient))
                     .build()
-
-                // Set custom instance as singleton
-                Picasso.setSingletonInstance(picasso)
 
                 // Load the image using Picasso
                 picasso.load(it.url).into(binding.activityMainImageOfTheDay)
