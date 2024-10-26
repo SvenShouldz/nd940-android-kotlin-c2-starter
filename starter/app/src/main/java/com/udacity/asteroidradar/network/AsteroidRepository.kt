@@ -84,4 +84,12 @@ class AsteroidRepository(private val asteroidDao: AsteroidDao) {
         val dateFormat = SimpleDateFormat(API_QUERY_DATE_FORMAT, Locale.getDefault())
         return dateFormat.format(calendar.time)
     }
+
+    fun getAsteroidsForToday(): LiveData<List<Asteroid>> {
+        return asteroidDao.getAsteroidsFromToday(getTodayDate())
+    }
+
+    fun getAsteroidsForThisWeek(): LiveData<List<Asteroid>> {
+        return asteroidDao.getAsteroidsFromDateRange(getTodayDate(), getEndDate())
+    }
 }

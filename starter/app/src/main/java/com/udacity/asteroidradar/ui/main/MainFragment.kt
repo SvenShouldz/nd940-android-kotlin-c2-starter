@@ -46,8 +46,10 @@ class MainFragment : Fragment() {
         // Observe the asteroidList LiveData and Picture of Day
         observeAsteroidList()
         observePictureOfDay()
+        // Observe for filtered List
+        observeFilteredAsteroidList()
 
-        setHasOptionsMenu(false)
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -81,6 +83,14 @@ class MainFragment : Fragment() {
         })
     }
 
+    private fun observeFilteredAsteroidList() {
+        viewModel.filteredAsteroids.observe(viewLifecycleOwner, Observer { asteroidList ->
+            asteroidList?.let {
+                adapter.submitList(it)
+            }
+        })
+    }
+
     private fun setupAsteroidRecycler() {
         adapter = AsteroidAdapter { asteroid ->
             // Navigate to a detail fragment on click
@@ -100,7 +110,12 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return true
+        when (item.itemId) {
+            R.id.show_all_menu -> viewModel.setFilter(AsteroidFilter.SHOW_THIS_WEEK)
+            R.id.show_rent_menu -> viewModel.setFilter(AsteroidFilter.SHOW_TODAY)
+            R.id.show_buy_menu -> viewModel.setFilter(AsteroidFilter.SHOW_SAVED)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

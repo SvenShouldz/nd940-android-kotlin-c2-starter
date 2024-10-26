@@ -16,4 +16,11 @@ interface AsteroidDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(asteroids: List<Asteroid>)
+
+    @Query("SELECT * FROM asteroid WHERE closeApproachDate = :today ORDER BY closeApproachDate ASC")
+    fun getAsteroidsFromToday(today: String): LiveData<List<Asteroid>>
+
+    @Query("SELECT * FROM asteroid WHERE closeApproachDate BETWEEN :startDate AND :endDate ORDER BY closeApproachDate ASC")
+    fun getAsteroidsFromDateRange(startDate: String, endDate: String): LiveData<List<Asteroid>>
+
 }
